@@ -1,0 +1,14 @@
+html 					{ overflow-y:scroll; }
+body 					{ padding-top:50px; }
+#content 			    { margin-bottom:30px; }
+		
+/*override styles for bootstrap*/
+.hidden-xs { display: block !important; }
+@media (max-width: 767px) {
+	.hidden-xs { display: none !important; }
+}
+[ng\:cloak], [ng-cloak], [data-ng-cloak],
+[x-ng-cloak], .ng-cloak, .x-ng-cloak,
+.ng-hide {
+	display: none !important;
+}
