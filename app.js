@@ -19,7 +19,12 @@ app.configure(function() {
 	}));
 	app.use(function(err, req, res, next) {
 		console.error(err.stack);
-		res.send(500, 'Server error');
+		
+		if (err.constructor.name === 'UnauthorizedError') {
+			return res.send(401, 'Unauthorized');		
+		} else {			
+			return res.send(500, 'Server error');
+		}
 	});	
 });
 
