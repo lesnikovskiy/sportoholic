@@ -14,7 +14,7 @@ module.exports = (function () {
 	
 	/************** Schema ********************/
 	var ResultSchema = new Schema({
-		date: {type: Date, required: true, unique: true},
+		date: {type: String, required: true, unique: true},
 		morningWeight: {type: Number},
 		nightWeight: {type: Number},
 		sugar: {type: Boolean},
@@ -44,36 +44,29 @@ module.exports = (function () {
 				return callback(null, results);
 			});
 		},
-		getResultByDate: function (date, callback) {
-			Result.findOne({date: date}, function (err, result) {
-				if (err)
+		createOrUpdate: function (result, callback) {
+			Result.findOne({date: result.date}, function (err, found) {
+				console.log('found: ' + found);
+				if (err) 
 					return callback(err);
 					
-				return callback(null, result);
-			});
-		},
-		createResult: function (result, callback) {
-			Result.create(result, function (err, result) {
-				if (err)
-					return callback(err);
-					
-				return callback(null, result);
-			});
-		},
-		updateResult: function (condition, result, callback) {
-			Result.update(condition, result, function (err, result) {
-				if (err)
-					return callback(err);
-					
-				return callback(null, result);
-			});
-		},
-		deleteResult: function (condition, callback) {
-			Result.remove(condition, function (err, result) {
-				if (err)
-					return callback (err);
-					
-				return callback(null, result);
+				if (found) {
+					Result.update({date: found}, result, function (err, updated) {
+						console.log('updated: ' + updated);
+						if (err)
+							return callback(err);
+							
+						return callback(null, updated);
+					});
+				} else {
+					Result.create(result, function (err, created) {
+						console.log('created: ' + created);
+						if (err)
+							return callback(err);
+							
+						return callback(null, created);
+					});
+				}				
 			});
 		}
 	};	

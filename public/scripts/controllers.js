@@ -7,29 +7,9 @@ sportControllers.controller('calendarController', ['$scope', '$window', '$locati
 ]);
 
 sportControllers.controller('resultsController', ['$scope', '$window', '$location', '$http', 
-    function ($scope, $window, $location, $http) {
-        $scope.result = {};
+    function ($scope, $window, $location, $http) {    
+		$scope.result = {};
 		
-		$scope.createResult = function () {
-			$http.post('/api/result', $scope.result)
-				.success(function (data) {
-					console.log(data);
-				})
-				.error(function (data) {
-					console.log(data);
-				});
-		};
-		
-		$scope.updateResult = function () {
-			$http.put('/api/result', $scope.result)
-				.success(function (data) {
-					console.log(data);
-				})
-				.error(function (data) {
-					console.log(data);
-				});
-		}
-        
         // Datepicker settings
         $scope.today = function() {
             $scope.result.date = new Date();
@@ -65,7 +45,25 @@ sportControllers.controller('resultsController', ['$scope', '$window', '$locatio
 
         $scope.initDate = new Date('2016-15-20');
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-        $scope.format = $scope.formats[0];
+        $scope.format = $scope.formats[2];
+		
+		$scope.result.morningWeight = 0,
+		$scope.result.nightWeight = 0,
+		$scope.result.sugar = false,
+		$scope.result.lateEating = false,
+		$scope.result.morningFittness = false,
+		$scope.result.nightFittness = false,
+		$scope.result.notes = ''
+		
+		$scope.submitResult = function () {
+			$http.post('/api/result', $scope.result)
+				.success(function (data) {
+					console.log(data);
+				})
+				.error(function (data) {
+					console.log(data);
+				});
+		};
     }
 ]);
 

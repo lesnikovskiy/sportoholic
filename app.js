@@ -43,8 +43,12 @@ app.get('/api/result', function (req, res) {
 });
 
 app.post('/api/result', function (req, res) {
-	db.createResult({
-		date: req.body.date,
+	var date = req.body.date 
+		? req.body.date.replace(/T/, ' ').replace(/\..+/, '') 
+		: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+	
+	db.createOrUpdate({
+		date: date,
 		morningWeight: req.body.morningWeight,
 		nightWeight: req.body.nightWeight,
 		sugar: req.body.sugar,
@@ -57,32 +61,6 @@ app.post('/api/result', function (req, res) {
 			return res.send(400, err);
 			
 		return res.send(results);
-	});
-});
-
-app.put('/api/result', function (req, res) {
-	db.updateResult({date: req.body.date}, {
-		morningWeight: req.body.morningWeight,
-		nightWeight: req.body.nightWeight,
-		sugar: req.body.sugar,
-		lateEating: req.body.lateEating,
-		morningFittness: req.body.morningFittness,
-		nightFittness: req.body.nightFittness,
-		notes: req.body.notes
-	}, function (err, results) {
-		if (err)
-			return res.send(400, err);
-			
-		return res.send(results);
-	});
-});
-
-app.delete('/api/result', function (req, res) {
-	db.deleteResult({date: req.body.date}, function (err, result) {
-		if (err)
-			return res.send(400, err);
-			
-		return res.send(result);
 	});
 });
 
