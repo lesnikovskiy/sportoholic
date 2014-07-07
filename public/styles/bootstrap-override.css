@@ -1,6 +1,6 @@
-html 					{ overflow-y:scroll; }
-body 					{ padding-top:50px; }
-#content 			    { margin-bottom:30px; }
+html { overflow-y:auto; }
+body { padding-top:50px; }
+#content  { width:96%; margin:0 auto; }
 		
 /*override styles for bootstrap*/
 .hidden-xs { display: block !important; }

@@ -3,6 +3,11 @@ var express = require('express');
 var app = module.exports = express();
 var util = require('util');
 var path = require('path');
+var mongoose = require('mongoose');
+
+var db = require('./data.js');
+
+db.connect();
 
 app.configure(function() {
 	app.set('port', process.env.PORT || 3000);
@@ -26,6 +31,33 @@ app.configure(function() {
 			return res.send(500, 'Server error');
 		}
 	});	
+});
+
+app.get('/api/result', function (req, res) {
+	db.listResults(function(err, results) {
+		if (err)
+			res.send(500, err);
+			
+		return res.send(results);
+	});
+});
+
+app.post('/api/result', function (req, res) {
+	db.createResult({
+		date: req.body.date,
+		morningWeight: req.body.morningWeight,
+		nightWeight: req.body.nightWeight,
+		sugar: req.body.sugar,
+		lateEating: req.body.lateEating,
+		morningFittness: req.body.morningFittness,
+		nightFittness: req.body.nightFittness,
+		notes: req.body.notes
+	}, function (err, results) {
+		if (err)
+			return res.send(400, err);
+			
+		return res.send(results);
+	});
 });
 
 app.get('*', function (req, res) {
