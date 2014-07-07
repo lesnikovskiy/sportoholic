@@ -46,6 +46,8 @@ app.post('/api/result', function (req, res) {
 	var date = req.body.date 
 		? req.body.date.replace(/T/, ' ').split(' ')[0]
 		: new Date().toISOString().replace(/T/, ' ').split(' ')[0];
+		
+	console.log('parsing date: ' + date);
 	
 	db.createOrUpdate({
 		date: date,
