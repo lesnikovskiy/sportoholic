@@ -25,7 +25,7 @@ module.exports = (function () {
 	});
 	
 	/************** Models ********************/
-	var Result = mongoose.Model('Result', ResultSchema);
+	var Result = mongoose.model('Result', ResultSchema);
 	
 	return {
 		connect: function () {
@@ -60,16 +60,16 @@ module.exports = (function () {
 				return callback(null, result);
 			});
 		},
-		updateResult: function (objId, result, callback) {
-			Result.update({_id: objId}, result, function (err, result) {
+		updateResult: function (condition, result, callback) {
+			Result.update(condition, result, function (err, result) {
 				if (err)
 					return callback(err);
 					
 				return callback(null, result);
 			});
 		},
-		deleteResult: function (objId, callback) {
-			Result.remove({_id: objId}, function (err, result) {
+		deleteResult: function (condition, callback) {
+			Result.remove(condition, function (err, result) {
 				if (err)
 					return callback (err);
 					

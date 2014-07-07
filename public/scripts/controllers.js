@@ -9,6 +9,26 @@ sportControllers.controller('calendarController', ['$scope', '$window', '$locati
 sportControllers.controller('resultsController', ['$scope', '$window', '$location', '$http', 
     function ($scope, $window, $location, $http) {
         $scope.result = {};
+		
+		$scope.createResult = function () {
+			$http.post('/api/result', $scope.result)
+				.success(function (data) {
+					console.log(data);
+				})
+				.error(function (data) {
+					console.log(data);
+				});
+		};
+		
+		$scope.updateResult = function () {
+			$http.put('/api/result', $scope.result)
+				.success(function (data) {
+					console.log(data);
+				})
+				.error(function (data) {
+					console.log(data);
+				});
+		}
         
         // Datepicker settings
         $scope.today = function() {
