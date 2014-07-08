@@ -2,6 +2,18 @@ var sportControllers = angular.module('sportControllers', ['ui.bootstrap.buttons
 
 sportControllers.controller('calendarController', ['$scope', '$window', '$location', '$http', 
     function ($scope, $window, $location, $http) {
+		$scope.eventSource = {
+			url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
+            className: 'gcal-event',           // an option!
+            currentTimezone: 'America/Chicago' // an option!
+		};
+		
+		$scope.dayClick = function (date, allDay, jsEvent, view) {
+			$scope.$apply(function () {
+				$location.path('/results/' + date); 
+			});
+		};
+	
         $scope.uiConfig = {
 			calendar:{
 				height: 450,
