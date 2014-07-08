@@ -19,8 +19,8 @@ module.exports = (function () {
 		nightWeight: {type: Number},
 		sugar: {type: Boolean},
 		lateEating: {type: Boolean},
-		morningFittness: {type: Boolean},
-		nightFittness: {type: Boolean},
+		morningFitness: {type: Boolean},
+		nightFitness: {type: Boolean},
 		notes: {type: String}
 	});
 	
@@ -51,10 +51,12 @@ module.exports = (function () {
 					return callback(err);
 					
 				if (found) {
-					Result.update({date: found}, result, function (err, updated) {
+					Result.update({date: found.date}, result, function (err, updated) {
 						console.log('updated: ' + updated);
-						if (err)
+						if (err) {
+							console.log(JSON.stringify(err));
 							return callback(err);
+						}
 							
 						return callback(null, updated);
 					});

@@ -1,4 +1,4 @@
-var sportControllers = angular.module('sportControllers', []);
+var sportControllers = angular.module('sportControllers', ['ui.bootstrap.buttons']);
 
 sportControllers.controller('calendarController', ['$scope', '$window', '$location', '$http', 
     function ($scope, $window, $location, $http) {
@@ -9,6 +9,8 @@ sportControllers.controller('calendarController', ['$scope', '$window', '$locati
 sportControllers.controller('resultsController', ['$scope', '$window', '$location', '$http', 
     function ($scope, $window, $location, $http) {    
 		$scope.result = {};
+		$scope.alert = {};
+		$scope.alert.visibility = false;
 		
         // Datepicker settings
         $scope.today = function() {
@@ -51,17 +53,21 @@ sportControllers.controller('resultsController', ['$scope', '$window', '$locatio
 		$scope.result.nightWeight = 0,
 		$scope.result.sugar = false,
 		$scope.result.lateEating = false,
-		$scope.result.morningFittness = false,
-		$scope.result.nightFittness = false,
+		$scope.result.morningFitness = false,
+		$scope.result.nightFitness = false,
 		$scope.result.notes = ''
 		
 		$scope.submitResult = function () {
 			$http.post('/api/result', $scope.result)
 				.success(function (data) {
-					console.log(data);
+					$scope.alert.visibility = true;
+					$scope.alert.type = 'danger';
+					$scope.alert.message = 'Results successfully saved.'
 				})
 				.error(function (data) {
-					console.log(data);
+					$scope.alert.visibility = true;
+					$scope.alert.type = 'danger';
+					$scope.alert.message = JSON.stringify(data);
 				});
 		};
     }

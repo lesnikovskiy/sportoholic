@@ -53,8 +53,8 @@ app.post('/api/result', function (req, res) {
 		nightWeight: req.body.nightWeight,
 		sugar: req.body.sugar,
 		lateEating: req.body.lateEating,
-		morningFittness: req.body.morningFittness,
-		nightFittness: req.body.nightFittness,
+		morningFitness: req.body.morningFitness,
+		nightFitness: req.body.nightFitness,
 		notes: req.body.notes
 	}, function (err, results) {
 		if (err)
