@@ -7,6 +7,10 @@ var mongoose = require('mongoose');
 
 var db = require('./data.js');
 
+String.prototype.formatToShortDate = function() {
+	return this.replace(/T/, ' ').split(' ')[0]
+};
+
 db.connect();
 
 app.configure(function() {
@@ -42,10 +46,20 @@ app.get('/api/result', function (req, res) {
 	});
 });
 
+app.get('/api/result/:date', function (req, res) {
+	console.log(req.params.date;
+	db.findResult({date: req.params.date}, function (err, result) {
+		if (err)
+			return res.send(400, err);
+
+		return res.send(result);
+	});
+});
+
 app.post('/api/result', function (req, res) {
 	var date = req.body.date 
 		? req.body.date.replace(/T/, ' ').split(' ')[0]
-		: new Date().toISOString().replace(/T/, ' ').split(' ')[0];
+		: new Date().toISOString().replace(/T/, ' ').split(' ')[0]
 	
 	db.createOrUpdate({
 		date: date,

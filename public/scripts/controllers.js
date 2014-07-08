@@ -40,18 +40,29 @@ sportControllers.controller('resultsController', ['$scope', '$window', '$locatio
         // Datepicker settings
         $scope.today = function() {
             $scope.result.date = new Date();
+            $http.get('/api/result/' + $scope.result.date.toISOString().replace(/T/, ' ').split(' ')[0])
+				.success(function (data) {
+					$scope.result = data;
+				})
+				.error(function (data) {
+					$scope.alert.visibility = true;
+					$scope.alert.type = 'danger';
+					$scope.alert.message = JSON.stringify(data);
+				});
         };
         
         $scope.today();
 
         $scope.clear = function () {
             $scope.result.date = null;
+            $scope.result = {};
         };
 
         // Disable weekend selection
+        /*
         $scope.disabled = function(date, mode) {
             return (mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ));
-        };
+        };*/
 
         $scope.toggleMin = function() {
             $scope.minDate = $scope.minDate ? null : new Date();
@@ -74,13 +85,13 @@ sportControllers.controller('resultsController', ['$scope', '$window', '$locatio
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[2];
 		
-		$scope.result.morningWeight = 0,
-		$scope.result.nightWeight = 0,
-		$scope.result.sugar = false,
-		$scope.result.lateEating = false,
-		$scope.result.morningFitness = false,
-		$scope.result.nightFitness = false,
-		$scope.result.notes = ''
+		$scope.result.morningWeight = 0;
+		$scope.result.nightWeight = 0;
+		$scope.result.sugar = false;
+		$scope.result.lateEating = false;
+		$scope.result.morningFitness = false;
+		$scope.result.nightFitness = false;
+		$scope.result.notes = '';
 		
 		$scope.submitResult = function () {
 			$http.post('/api/result', $scope.result)

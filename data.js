@@ -44,6 +44,14 @@ module.exports = (function () {
 				return callback(null, results);
 			});
 		},
+		findResult: function (condition, callback) {
+			Result.findOne(condition, function (err, result) {
+				if (err)
+					return callback(err);
+
+				return callback(null, result);
+			});
+		},
 		createOrUpdate: function (result, callback) {
 			Result.findOne({date: result.date}, function (err, found) {
 				console.log('found: ' + found);
