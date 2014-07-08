@@ -2,7 +2,20 @@ var sportControllers = angular.module('sportControllers', ['ui.bootstrap.buttons
 
 sportControllers.controller('calendarController', ['$scope', '$window', '$location', '$http', 
     function ($scope, $window, $location, $http) {
-        
+        $scope.uiConfig = {
+			calendar:{
+				height: 450,
+				editable: true,
+				header:{
+					left: 'month basicWeek basicDay agendaWeek agendaDay',
+					center: 'title',
+					right: 'today prev,next'
+				},
+				dayClick: $scope.alertEventOnClick,
+				eventDrop: $scope.alertOnDrop,
+				eventResize: $scope.alertOnResize
+			}	
+		};
     }
 ]);
 
