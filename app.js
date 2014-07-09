@@ -47,7 +47,7 @@ app.get('/api/result', function (req, res) {
 });
 
 app.get('/api/result/:date', function (req, res) {
-	console.log(req.params.date;
+	console.log(req.params.date);
 	db.findResult({date: req.params.date}, function (err, result) {
 		if (err)
 			return res.send(400, err);
