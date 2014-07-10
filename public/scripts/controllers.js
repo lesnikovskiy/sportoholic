@@ -54,9 +54,7 @@ sportControllers.controller('resultsController', ['$scope', '$window', '$locatio
 		
         // Datepicker settings
         $scope.today = function() {
-			console.log('today triggered');
-            $scope.result.date = new Date();
-			$scope.result.dateMarker = getDateMarker($scope.result.date);
+            $scope.result.date = new Date();            
         };
         
         $scope.today();
@@ -85,6 +83,11 @@ sportControllers.controller('resultsController', ['$scope', '$window', '$locatio
         $scope.initDate = new Date('2016-15-20');
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = 'dd.MM.yyyy';
+
+        $scope.watch('result.date', function (oldVal, newVal) {
+        	debugger;
+        	$scope.result.dateMarker = getDateMarker(newVal);
+        });
 				
 		$scope.submitResult = function () {
 			$http.post('/api/result', $scope.result)
