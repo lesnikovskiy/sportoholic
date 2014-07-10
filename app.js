@@ -46,9 +46,9 @@ app.get('/api/result', function (req, res) {
 	});
 });
 
-app.get('/api/result/:date', function (req, res) {
-	console.log(req.params.date);
-	db.findResult({date: req.params.date}, function (err, result) {
+app.get('/api/result/:id', function (req, res) {
+	console.log(req.params.id);
+	db.findResult({_id: req.params.id}, function (err, result) {
 		if (err)
 			return res.send(400, err);
 
@@ -57,18 +57,16 @@ app.get('/api/result/:date', function (req, res) {
 });
 
 app.post('/api/result', function (req, res) {
-	var date = req.body.date 
-		? req.body.date.replace(/T/, ' ').split(' ')[0]
-		: new Date().toISOString().replace(/T/, ' ').split(' ')[0]
-	
 	db.createOrUpdate({
-		date: date,
+		dateMarker: req.body.dateMarker,
+		date: req.body.date,
 		morningWeight: req.body.morningWeight,
 		nightWeight: req.body.nightWeight,
 		sugar: req.body.sugar,
 		lateEating: req.body.lateEating,
 		morningFitness: req.body.morningFitness,
 		nightFitness: req.body.nightFitness,
+		walking: req.body.walking,
 		notes: req.body.notes
 	}, function (err, results) {
 		if (err)

@@ -14,13 +14,15 @@ module.exports = (function () {
 	
 	/************** Schema ********************/
 	var ResultSchema = new Schema({
-		date: {type: String, required: true, unique: true},
+		dateMarker: {type: String, required: true, unique: true},
+		date: {type: Date, required: true},
 		morningWeight: {type: Number},
 		nightWeight: {type: Number},
 		sugar: {type: Boolean},
 		lateEating: {type: Boolean},
 		morningFitness: {type: Boolean},
 		nightFitness: {type: Boolean},
+		walking: {type: Boolean},
 		notes: {type: String}
 	});
 	
@@ -53,13 +55,13 @@ module.exports = (function () {
 			});
 		},
 		createOrUpdate: function (result, callback) {
-			Result.findOne({date: result.date}, function (err, found) {
+			Result.findOne({dateMarker: result.dateMarker}, function (err, found) {
 				console.log('found: ' + found);
 				if (err) 
 					return callback(err);
 					
 				if (found) {
-					Result.update({date: found.date}, result, function (err, updated) {
+					Result.update({dateMarker: found.dateMarker}, result, function (err, updated) {
 						console.log('updated: ' + updated);
 						if (err) {
 							console.log(JSON.stringify(err));

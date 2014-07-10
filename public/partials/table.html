@@ -1,0 +1,28 @@
+<table class="table table-stripped">
+	<thead>
+		<th>Date</th>
+		<th>Morning weight</th>
+		<th>Night weight</th>
+		<th>Sugar</th>
+		<th>Late eating</th>
+		<th>Morning fitness</th>
+		<th>Night fitness</th>
+		<th>Walking</th>
+		<th>Notes</th>
+	<thead>
+	<tbody ng-repeat="result in results">
+		<tr>
+			<td>
+				<a href="#/results/{{result._id}}">{{result.dateMarker}}</a>
+			</td>
+			<td>{{result.morningWeight}}</td>
+			<td>{{result.nightWeight}}</td>
+			<td>{{result.sugar}}</td>
+			<td>{{result.lateEating}}</td>
+			<td>{{result.morningFitness}}</td>
+			<td>{{result.nightFitness}}</td>
+			<td>{{result.walking}}</td>
+			<td>{{result.notes}}</td>
+		</tr>
+	</tbody>
+</table>
