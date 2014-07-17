@@ -1,6 +1,6 @@
-var sportControllers = angular.module('sportControllers', ['ui.bootstrap.buttons']);
+var sportControllers = angular.module('sportControllers', []);
 
-sportControllers.controller('tableController', ['$scope', '$window', '$location', '$http', 
+sportControllers.controller('listController', ['$scope', '$window', '$location', '$http', 
     function ($scope, $window, $location, $http) {
 		$scope.results = [];
 		
@@ -14,19 +14,8 @@ sportControllers.controller('tableController', ['$scope', '$window', '$location'
 	}
 ]);
 
-sportControllers.controller('resultsController', ['$scope', '$window', '$location', '$http', '$routeParams',
-    function ($scope, $window, $location, $http, $routeParams) {    
-		function getDateMarker(date) {
-			if (!date && date.constructor !== Date)
-				return '';
-		
-			var day = date.getDate();
-			var month = date.getMonth();
-			var year = date.getFullYear();
-			
-			return day + '-' + month + '-' + year;
-		}
-	
+sportControllers.controller('editController', ['$scope', '$window', '$location', '$http', '$routeParams',
+    function ($scope, $window, $location, $http, $routeParams) {			
 		$scope.result = {};
 		$scope.alert = {};
 		$scope.alert.visibility = false;
@@ -82,12 +71,7 @@ sportControllers.controller('resultsController', ['$scope', '$window', '$locatio
 
         $scope.initDate = new Date('2016-15-20');
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-        $scope.format = 'dd.MM.yyyy';
-
-        $scope.watch('result.date', function (oldVal, newVal) {
-        	debugger;
-        	$scope.result.dateMarker = getDateMarker(newVal);
-        });
+        $scope.format = $scope.formats[2];
 				
 		$scope.submitResult = function () {
 			$http.post('/api/result', $scope.result)
@@ -101,69 +85,6 @@ sportControllers.controller('resultsController', ['$scope', '$window', '$locatio
 					$scope.alert.type = 'danger';
 					$scope.alert.message = JSON.stringify(data);
 				});
-		};
-    }
-]);
-
-sportControllers.controller('calendarController', ['$scope', '$window', '$location', '$http', 
-    function ($scope, $window, $location, $http) {
-	/*
-		$scope.eventSource = {
-			url: "/api/result"
-		};*/	
-		var date = new Date();
-		var d = date.getDate();
-		var m = date.getMonth();
-		var y = date.getFullYear();
-		
-		$scope.events = [
-			{title: 'All day event', start: new Date(y, m, 1), allDay: true}
-		];
-		
-/*		
-		$scope.remove = function (index) {
-			$scope.events.splice(index, 1);
-		};*/
-		
-		$http.get('/api/result')
-			.success(function (data) {
-				for (var i = 0; i < data.length; i++) {
-					$scope.events.push({
-						title: data[i].dateMarker,
-						start: new Date(data[i].date),
-						url: '#/results/' + data[i].dateMarker
-					});
-				}
-			})
-			.error(function (data) {
-				console.log(data);
-			});
-				
-		$scope.dayClick = function (date, allDay, jsEvent, view) {
-			var marker = date.year() + '-' + date.month() + '-' + date.day();
-			console.log(marker);
-			$location.path('#/results/' + marker);
-		};
-			
-        $scope.uiConfig = {
-			calendar:{
-				height: 450,
-				editable: true,
-				header:{
-					left: 'month basicWeek basicDay agendaWeek agendaDay',
-					center: 'title',
-					right: 'today prev,next'
-				},
-				dayClick: function (date, allDay, jsEvent, view) {
-					var marker = date.year() + '-' + date.month() + '-' + date.day();
-					console.log(marker);
-					$location.path('#/results/' + marker);
-				},
-				select: function (start, end, allDay, jsEvent) {
-					$location.path('#/results');
-				}
-				//viewRender: $scope.renderView
-			}	
 		};
     }
 ]);

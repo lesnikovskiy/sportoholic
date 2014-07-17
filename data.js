@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var util = require('util');
+var moment = require('moment');
 
 module.exports = (function () {	
 	var connection_string = 'mongodb://localhost:8000/sportoholic';
@@ -14,7 +15,6 @@ module.exports = (function () {
 	
 	/************** Schema ********************/
 	var ResultSchema = new Schema({
-		dateMarker: {type: String, required: true, unique: true},
 		date: {type: Date, required: true},
 		morningWeight: {type: Number},
 		nightWeight: {type: Number},
@@ -39,7 +39,10 @@ module.exports = (function () {
 				mongoose.disconnect();
 		},
 		listResults: function (callback) {
-			Result.find({}, function(err, results) {
+			Result.find({'date': {
+					'$gte': moment.max(moment().subtract(1, 'd')), '$lte': moment.min(moment())
+				}
+			}).sort('date', 1).exec(function(err, results) {
 				if (err)
 					return callback(err);
 				
@@ -54,31 +57,21 @@ module.exports = (function () {
 				return callback(null, result);
 			});
 		},
-		createOrUpdate: function (result, callback) {
-			Result.findOne({dateMarker: result.dateMarker}, function (err, found) {
-				console.log('found: ' + found);
-				if (err) 
+		createResult: function (result, callback) {
+			Result.create(result, function (err, created) {
+				if (err)
 					return callback(err);
 					
-				if (found) {
-					Result.update({dateMarker: found.dateMarker}, result, function (err, updated) {
-						console.log('updated: ' + updated);
-						if (err) {
-							console.log(JSON.stringify(err));
-							return callback(err);
-						}
-							
-						return callback(null, updated);
-					});
-				} else {
-					Result.create(result, function (err, created) {
-						console.log('created: ' + created);
-						if (err)
-							return callback(err);
-							
-						return callback(null, created);
-					});
-				}				
+				return callback(null, created);
+			});
+		},
+		updateResult: function (condition, result, callback) {
+			Result.update(condition, result, function (err, updated) {
+				if (err) {
+					return callback(err);
+				}
+					
+				return callback(null, updated);
 			});
 		}
 	};	

@@ -47,7 +47,9 @@ app.get('/api/result', function (req, res) {
 });
 
 app.get('/api/result/:id', function (req, res) {
-	console.log(req.params.id);
+	if (!req.params.id)
+		return res.send(500, {message: '_id paramater is required'});
+		
 	db.findResult({_id: req.params.id}, function (err, result) {
 		if (err)
 			return res.send(400, err);
@@ -57,8 +59,7 @@ app.get('/api/result/:id', function (req, res) {
 });
 
 app.post('/api/result', function (req, res) {
-	db.createOrUpdate({
-		dateMarker: req.body.dateMarker,
+	var result = {
 		date: req.body.date,
 		morningWeight: req.body.morningWeight,
 		nightWeight: req.body.nightWeight,
@@ -68,12 +69,23 @@ app.post('/api/result', function (req, res) {
 		nightFitness: req.body.nightFitness,
 		walking: req.body.walking,
 		notes: req.body.notes
-	}, function (err, results) {
-		if (err)
-			return res.send(400, err);
-			
-		return res.send(results);
-	});
+	};
+
+	if (!req.body._id) {
+		db.createResult(result, function (err, newOne) {
+			if (err)
+				return res.send(400, err);
+				
+			return res.send(newOne);
+		});
+	} else {
+		db.updateResult({_id: req.body._id}, result, function (err, updated) {
+			if (err)
+				return res.send(400, err);
+				
+			return res.send(updated);
+		});
+	}
 });
 
 app.get('*', function (req, res) {

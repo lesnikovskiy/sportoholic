@@ -5,20 +5,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Sportoholic</title>
 	
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="/styles/fullcalendar.css" />
-	<link rel="stylesheet" href="/styles/fullcalendar.print.css" />	
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />	
 	<link rel="stylesheet" href="/styles/bootstrap-override.css" />
 		
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+	<script src="/scripts/libs/jquery-ui.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script><!-- load angular 1.2.7 -->
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-route.min.js"></script>
 	<!-- refer to docs page to user ui-bootstrap http://angular-ui.github.io/bootstrap/ -->
 	<script src="/scripts/libs/ui-bootstrap-tpls-0.11.0.min.js"></script>
-	<script src="/scripts/libs/moment.min.js"></script>
-	<script src="/scripts/libs/jquery-ui.min.js"></script>
-	<script src="/scripts/libs/calendar.js"></script>
-	<script src="/scripts/libs/fullcalendar.min.js"></script>	
+		
 	<!-- application scripts -->
 	<script src="/scripts/utils.js"></script>
 	<script src="/scripts/app.js"></script>
@@ -34,7 +30,7 @@
             
             <nav class="navbar navbar-default" role="navigation">
 				<a class="navbar-brand" href="#/">Results</a>
-                <a class="navbar-brand" href="#/results">Add result</a>	
+                <a class="navbar-brand" href="#/edit">New result</a>	
             </nav>
             
             <div ng-view></div>

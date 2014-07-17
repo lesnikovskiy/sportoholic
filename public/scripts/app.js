@@ -1,10 +1,9 @@
-var sportoholic = angular.module('sportoholic', ['ngRoute', 'sportControllers', 'ui.bootstrap', 'ui.calendar']);
+var sportoholic = angular.module('sportoholic', ['ngRoute', 'sportControllers', 'ui.bootstrap']);
 
 sportoholic.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
-		.when('/', {templateUrl: '/partials/table.html', controller: 'tableController'})
-		.when('/calendar', {templateUrl: '/partials/calendar.html', controller: 'calendarController'})
-		.when('/results/', {templateUrl: '/partials/results.html', controller: 'resultsController'})
-        .when('/results/:id', {templateUrl: '/partials/results.html', controller: 'resultsController'})
+		.when('/', {templateUrl: '/partials/list.html', controller: 'listController'})
+		.when('/edit/', {templateUrl: '/partials/edit.html', controller: 'editController'})
+        .when('/edit/:id', {templateUrl: '/partials/edit.html', controller: 'editController'})
         .otherwise({redirectTo: '/'});
 }]);
