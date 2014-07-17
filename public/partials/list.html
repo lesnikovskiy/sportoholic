@@ -1,3 +1,22 @@
+<div ng-repeat="result in results">
+	<div class="list-group">
+		<a href="#/edit/{{result._id}}" class="list-group-item">
+			<h4 class="list-group-item-heading">{{result.date | date: 'd EEEE'}}</h4>
+			<p>Morning weight: {{result.morningWeight}}</p>
+			<p>Night weight: {{result.nightWeight}}</p>
+			<p>
+				<span ng-class="{{result.sugar ? 'label label-danger' : 'label label-success'}}">sugar</span>
+				<span class="label label-danger">late eating</span>
+				<span class="label">morning fittness</span>
+				<span class="label">night fittness</span>
+				<span class="label">walking</span>
+			</p>
+			<p>Notes: {{result.notes}}</p>
+		</a>
+	</div>
+</div>
+
+<!--
 <table class="table table-stripped">
 	<thead>
 		<th>Date</th>
@@ -13,7 +32,7 @@
 	<tbody ng-repeat="result in results">
 		<tr>
 			<td>
-				<a href="#/results/{{result._id}}">{{result.date}}</a>
+				<a href="#/edit/{{result._id}}">{{result.date | date: 'd EEEE'}}</a>
 			</td>
 			<td>{{result.morningWeight}}</td>
 			<td>{{result.nightWeight}}</td>
@@ -25,4 +44,4 @@
 			<td>{{result.notes}}</td>
 		</tr>
 	</tbody>
-</table>
+</table>-->

@@ -1,10 +1,11 @@
 var mongoose = require('mongoose');
 var util = require('util');
-var moment = require('moment');
+var utils = require('./utilities');
 
 module.exports = (function () {	
-	var connection_string = 'mongodb://localhost:8000/sportoholic';
-
+	var connection_string = 'mongodb://localhost:8000/sportoholic';new Date().getMonth()
+	//var connection_string = 'mongodb://nodejitsu:89af3de90d9d2564412b04ae75baf36d@troup.mongohq.com:10041/nodejitsudb222227843';
+	
 	var connection = mongoose.connection;
 	connection.on('error', console.error.bind(console, 'connection error: '));
 	connection.once('open', function callback() {
@@ -39,15 +40,19 @@ module.exports = (function () {
 				mongoose.disconnect();
 		},
 		listResults: function (callback) {
-			Result.find({'date': {
-					'$gte': moment.max(moment().subtract(1, 'd')), '$lte': moment.min(moment())
-				}
-			}).sort('date', 1).exec(function(err, results) {
-				if (err)
-					return callback(err);
-				
-				return callback(null, results);
-			});
+			var startDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
+			var endDate = new Date(new Date().getFullYear(), new Date().getMonth(), utils.getMonthDays(new Date().getMonth())).toISOString();
+			console.log('Start date: %s', startDate);
+			console.log('End date: %s', endDate);
+			
+			Result.find({'date': {'$gte': startDate, '$lte': endDate}})
+				.sort({date: 1})
+				.exec(function(err, results) {
+					if (err)
+						return callback(err);
+					
+					return callback(null, results);
+				});
 		},
 		findResult: function (condition, callback) {
 			Result.findOne(condition, function (err, result) {
