@@ -3,8 +3,7 @@ var util = require('util');
 var utils = require('./utilities');
 
 module.exports = (function () {	
-	//var connection_string = 'mongodb://localhost:8000/sportoholic';
-	var connection_string = 'mongodb://nodejitsu:89af3de90d9d2564412b04ae75baf36d@troup.mongohq.com:10041/nodejitsudb222227843';
+	var connection_string = 'mongodb://localhost:8000/sportoholic';
 	
 	var connection = mongoose.connection;
 	connection.on('error', console.error.bind(console, 'connection error: '));
