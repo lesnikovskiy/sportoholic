@@ -5,43 +5,13 @@
 			<p>Morning weight: {{result.morningWeight}}</p>
 			<p>Night weight: {{result.nightWeight}}</p>
 			<p>
-				<span ng-class="{{result.sugar ? 'label label-danger' : 'label label-success'}}">sugar</span>
-				<span class="label label-danger">late eating</span>
-				<span class="label">morning fittness</span>
-				<span class="label">night fittness</span>
-				<span class="label">walking</span>
+				<span ng-class="result.sugar ? 'label label-danger' : 'label label-success'">sugar</span>
+				<span ng-class="result.lateEating ? 'label label-danger' : 'label label-success'">late eating</span>
+				<span ng-class="result.morningFitness ? 'label label-success' :'label label-danger'">morning fittness</span>
+				<span ng-class="result.nightFitness ? 'label label-success' :'label label-danger'">night fittness</span>
+				<span ng-class="result.walking ? 'label label-success' :'label label-danger'">walking</span>
 			</p>
 			<p>Notes: {{result.notes}}</p>
 		</a>
 	</div>
 </div>
-
-<!--
-<table class="table table-stripped">
-	<thead>
-		<th>Date</th>
-		<th>Morning weight</th>
-		<th>Night weight</th>
-		<th>Sugar</th>
-		<th>Late eating</th>
-		<th>Morning fitness</th>
-		<th>Night fitness</th>
-		<th>Walking</th>
-		<th>Notes</th>
-	<thead>
-	<tbody ng-repeat="result in results">
-		<tr>
-			<td>
-				<a href="#/edit/{{result._id}}">{{result.date | date: 'd EEEE'}}</a>
-			</td>
-			<td>{{result.morningWeight}}</td>
-			<td>{{result.nightWeight}}</td>
-			<td>{{result.sugar}}</td>
-			<td>{{result.lateEating}}</td>
-			<td>{{result.morningFitness}}</td>
-			<td>{{result.nightFitness}}</td>
-			<td>{{result.walking}}</td>
-			<td>{{result.notes}}</td>
-		</tr>
-	</tbody>
-</table>-->

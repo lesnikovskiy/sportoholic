@@ -1,14 +1,13 @@
 {
 	"name": "sportoholic",
-	"version": "0.0.0",
+	"version": "0.0.0-1",
 	"description": "Web application to track sport activity",
 	"main": "app.js",
 	"dependencies": {
 		"express": "~3.4.4",
 		"mongoose": "~3.6.2",
 		"express-jwt": "~0.1.0",
-		"jsonwebtoken": "~0.1.0",
-		"moment": "~2.0.0"
+		"jsonwebtoken": "~0.3.0"
 	},
 	"subdomain": "sportoholic",
 	"scripts": {
@@ -16,5 +15,9 @@
 	},
 	"engines": {
 		"node": "0.10.x"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/lesnikovskiy/sportoholic"
 	}
 }
