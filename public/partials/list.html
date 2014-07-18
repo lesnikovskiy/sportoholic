@@ -2,11 +2,15 @@
 	<div class="list-group">
 		<a href="#/edit/{{result._id}}" class="list-group-item">
 			<h4 class="list-group-item-heading">{{result.date | date: 'd EEEE'}}</h4>
-			<p>Morning weight: {{result.morningWeight}}</p>
-			<p>Night weight: {{result.nightWeight}}</p>
+			<p>Morning weight: {{result.morningWeight}} kg.</p>
+			<p>Night weight: {{result.nightWeight}} kg.</p>
 			<p>
+				Diet: 
 				<span ng-class="result.sugar ? 'label label-danger' : 'label label-success'">sugar</span>
-				<span ng-class="result.lateEating ? 'label label-danger' : 'label label-success'">late eating</span>
+				<span ng-class="result.lateEating ? 'label label-danger' : 'label label-success'">late eating</span>				
+			</p>
+			<p>
+				Acitivities: 
 				<span ng-class="result.morningFitness ? 'label label-success' :'label label-danger'">morning fittness</span>
 				<span ng-class="result.nightFitness ? 'label label-success' :'label label-danger'">night fittness</span>
 				<span ng-class="result.walking ? 'label label-success' :'label label-danger'">walking</span>

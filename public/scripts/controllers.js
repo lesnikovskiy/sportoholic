@@ -79,6 +79,7 @@ sportControllers.controller('editController', ['$scope', '$window', '$location',
 					$scope.alert.visibility = true;
 					$scope.alert.type = 'danger';
 					$scope.alert.message = 'Results successfully saved.'
+					$location.path('#/list');
 				})
 				.error(function (data) {
 					$scope.alert.visibility = true;
