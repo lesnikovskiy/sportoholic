@@ -88,6 +88,21 @@ app.post('/api/result', function (req, res) {
 	}
 });
 
+app.post('/register', function (req, res) {
+	db.registerUser({
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
+		email: req.body.email,
+		password: req.body.password,
+		date: new Date()
+	}, function (err, u) {
+		if (err)
+			res.send(500, err);
+			
+		res.send(u);
+	});
+});
+
 app.get('*', function (req, res) {
     res.sendfile(path.join(__dirname, '/public/index.html'));
 });

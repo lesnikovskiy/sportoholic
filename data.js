@@ -26,8 +26,17 @@ module.exports = (function () {
 		notes: {type: String}
 	});
 	
+	var UserSchema = new Schema({
+		firstName: {type: String, required: true},
+		lastName: {type: String, required: true},
+		email: {type: String, required: true, unique: true},
+		password: {type: String, required: true},
+		date: {type: Date}
+	});
+	
 	/************** Models ********************/
 	var Result = mongoose.model('Result', ResultSchema);
+	var User = mongoose.model('User', UserSchema);
 	
 	return {
 		connect: function () {
@@ -74,6 +83,22 @@ module.exports = (function () {
 				}
 					
 				return callback(null, updated);
+			});
+		},
+		registerUser: function (user, callback) {
+			User.create(user, function (err, u) {
+				if (err)
+					return callback(err);
+				
+				return callback(null, u);
+			});
+		},
+		authorizeUser: function (login, password, callback) {
+			User.findOne({email: login, password: password}, function (err, u) {
+				if (err)
+					return callback(err);
+					
+				return callback(null, u);
 			});
 		}
 	};	

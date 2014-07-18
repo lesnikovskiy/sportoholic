@@ -89,3 +89,25 @@ sportControllers.controller('editController', ['$scope', '$window', '$location',
 		};
     }
 ]);
+
+sportControllers.controller('registerController', ['$scope', '$window', '$location', '$http', 
+	function ($scope, $window, $location, $http) {
+		$scope.alert = {};
+		$scope.alert.visibility = false;
+		
+		$scope.user = {};
+		$scope.response = {};
+		
+		$scope.register = function () {
+			$http.post('/register', $scope.user)
+			.success(function (data) {
+				$location.path('#/');
+			})
+			.error(function (data) {
+				$scope.alert.visibility = true;
+				$scope.alert.type = 'danger';
+				$scope.alert.message = JSON.stringify(data);
+			});
+		};		
+	}
+]);
