@@ -93,7 +93,7 @@ module.exports = (function () {
 				return callback(null, u);
 			});
 		},
-		authorizeUser: function (login, password, callback) {
+		findUser: function (login, password, callback) {
 			User.findOne({email: login, password: password}, function (err, u) {
 				if (err)
 					return callback(err);

@@ -1,0 +1,11 @@
+<alert type="{{alert.type}}" close="closeAlert($index)" ng-show="alert.visibility">{{alert.message}}</alert>
+<form>
+	<div class="input-group form-group">
+		<span class="input-group-addon">@</span>
+		<input type="email" class="form-control" ng-model="user.email" placeholder="Email" required />
+	</div>
+	<div class="form-group">
+		<input type="password" class="form-control" ng-model="user.password" placeholder="password" required />
+	</div>
+	<button type="submit" class="btn btn-primary" ng-click="signin()">Sign in</button>
+</form>

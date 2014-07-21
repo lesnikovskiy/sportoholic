@@ -4,12 +4,12 @@ var app = module.exports = express();
 var util = require('util');
 var path = require('path');
 var mongoose = require('mongoose');
+var jwt = require('jsonwebtoken');
+var expressjwt = require('express-jwt');
+
+var secret = 'FE6DA63C-03CD-4FE4-8B3A-8EB0651A5B82';
 
 var db = require('./data.js');
-
-String.prototype.formatToShortDate = function() {
-	return this.replace(/T/, ' ').split(' ')[0]
-};
 
 db.connect();
 
@@ -21,20 +21,20 @@ app.configure(function() {
 	app.use(express.json());
     app.use(express.urlencoded());
 	app.use(express.static(path.join(__dirname, '/public')));	
-	app.use(app.router);
-	app.use(express.errorHandler({
-		dumpExceptions: true, 
-		showStack: true
-	}));
+	// remove app.use(express.router) as it should be processed via express-jwt
+	app.use('/api', expressjwt({secret: secret}));
 	app.use(function(err, req, res, next) {
-		console.error(err.stack);
-		
+		console.error(err.stack);		
 		if (err.constructor.name === 'UnauthorizedError') {
 			return res.send(401, 'Unauthorized');		
 		} else {			
 			return res.send(500, 'Server error');
 		}
 	});	
+	app.use(express.errorHandler({
+		dumpExceptions: true, 
+		showStack: true
+	}));	
 });
 
 app.get('/api/result', function (req, res) {
@@ -100,6 +100,25 @@ app.post('/register', function (req, res) {
 			res.send(500, err);
 			
 		res.send(u);
+	});
+});
+
+app.post('/signin', function (req, res) {
+	if (!req.body.email)
+		return res.send(500, {message: 'email is required'});
+		
+	if (!req.body.password) 
+		return res.send(500, {message: 'password is required'});
+	
+	db.findUser(req.body.email, req.body.password, function (err, user) {
+		if (err)
+			res.send(500, err);
+			
+		if (!user)
+			return res.send(401, 'Unauthorized');
+		
+		var token = jwt.sign(user, secret, {expiresInMinutes: 60});
+		return res.send(token);
 	});
 });
 

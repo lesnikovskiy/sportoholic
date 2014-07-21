@@ -6,5 +6,6 @@ sportoholic.config(['$routeProvider', function ($routeProvider) {
 		.when('/edit/', {templateUrl: '/partials/edit.html', controller: 'editController'})
         .when('/edit/:id', {templateUrl: '/partials/edit.html', controller: 'editController'})
 		.when('/register', {templateUrl: '/partials/register.html', controller: 'registerController'})
+		.when('/login', {templateUrl: '/partials/login.html', controller: 'loginController'})
         .otherwise({redirectTo: '/'});
 }]);

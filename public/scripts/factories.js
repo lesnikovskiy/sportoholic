@@ -1,4 +1,4 @@
-scotchTodo.factory('authInterceptor', function ($rootScope, $q, $window) {
+sportoholic.factory('authInterceptor', function ($rootScope, $q, $window) {
 	return {
 		request: function (config) {
 			config.headers = config.headers || {};
@@ -18,6 +18,6 @@ scotchTodo.factory('authInterceptor', function ($rootScope, $q, $window) {
 	};
 });
 
-scotchTodo.config(function ($httpProvider) {
+sportoholic.config(function ($httpProvider) {
 	$httpProvider.interceptors.push('authInterceptor');
 });

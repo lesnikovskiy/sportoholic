@@ -2,8 +2,11 @@ var sportControllers = angular.module('sportControllers', []);
 
 sportControllers.controller('listController', ['$scope', '$window', '$location', '$http', 
     function ($scope, $window, $location, $http) {
-		$scope.results = [];
+		if (!$window.sessionStorage.token)
+			return $location.path('/login');
 		
+		$scope.results = [];	
+				
 		$http.get('/api/result')
 			.success(function (data) {
 				$scope.results = data;
@@ -15,7 +18,10 @@ sportControllers.controller('listController', ['$scope', '$window', '$location',
 ]);
 
 sportControllers.controller('editController', ['$scope', '$window', '$location', '$http', '$routeParams',
-    function ($scope, $window, $location, $http, $routeParams) {			
+    function ($scope, $window, $location, $http, $routeParams) {		
+		if (!$window.sessionStorage.token)
+			return $location.path('/login');
+	
 		$scope.result = {};
 		$scope.alert = {};
 		$scope.alert.visibility = false;
@@ -79,7 +85,7 @@ sportControllers.controller('editController', ['$scope', '$window', '$location',
 					$scope.alert.visibility = true;
 					$scope.alert.type = 'danger';
 					$scope.alert.message = 'Results successfully saved.'
-					$location.path('#/list');
+					$location.path('/list');
 				})
 				.error(function (data) {
 					$scope.alert.visibility = true;
@@ -91,7 +97,7 @@ sportControllers.controller('editController', ['$scope', '$window', '$location',
 ]);
 
 sportControllers.controller('registerController', ['$scope', '$window', '$location', '$http', 
-	function ($scope, $window, $location, $http) {
+	function ($scope, $window, $location, $http) {	
 		$scope.alert = {};
 		$scope.alert.visibility = false;
 		
@@ -100,14 +106,44 @@ sportControllers.controller('registerController', ['$scope', '$window', '$locati
 		
 		$scope.register = function () {
 			$http.post('/register', $scope.user)
-			.success(function (data) {
-				$location.path('#/');
-			})
-			.error(function (data) {
-				$scope.alert.visibility = true;
-				$scope.alert.type = 'danger';
-				$scope.alert.message = JSON.stringify(data);
-			});
+				.success(function (data) {
+					$location.path('/');
+				})
+				.error(function (data) {
+					$scope.alert.visibility = true;
+					$scope.alert.type = 'danger';
+					$scope.alert.message = JSON.stringify(data);
+				});
 		};		
+	}
+]);
+
+sportControllers.controller('loginController', ['$scope', '$window', '$location', '$http', 
+    function ($scope, $window, $location, $http) {
+		$scope.alert = {};
+		$scope.alert.visibility = false;
+	
+		$scope.user = {};
+		
+		$scope.signin = function () {
+			$http.post('/signin', $scope.user)
+				.success(function (data) {
+					$window.sessionStorage.token = data;
+					$scope.isAuthenticated = true;
+					
+					var profileString = data.split('.')[1].fromBase64();
+					var profile = JSON.parse(profileString);
+					
+					$location.path('/');
+				})
+				.error(function (data) {
+					$scope.alert.visibility = true;
+					$scope.alert.type = 'danger';
+					$scope.alert.message = JSON.stringify(data);
+					
+					delete $window.sessionStorage.token;
+					$scope.isAuthenticated = false;
+				});
+		};
 	}
 ]);
