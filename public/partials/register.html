@@ -1,5 +1,5 @@
 <alert type="{{alert.type}}" close="closeAlert($index)" ng-show="alert.visibility">{{alert.message}}</alert>
-<form>
+<form role="form" ng-submit="register()">
 	<div class="form-group">
 		<input type="text" class="form-control" ng-model="user.firstName" placeholder="First name" required /></div>
 	</div>
@@ -16,5 +16,5 @@
 	<div class="form-group">
 		<input type="password" class="form-control" placeholder="confirm password" required />
 	</div>
-	<button type="submit" class="btn btn-primary" ng-click="register()">Submit</button>
+	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
