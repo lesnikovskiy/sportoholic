@@ -82,6 +82,7 @@ sportControllers.controller('editController', ['$scope', '$window', '$location',
 		$scope.submitResult = function () {
 			$http.post('/api/result', $scope.result)
 				.success(function (data) {
+					debugger;
 					$scope.alert.visibility = true;
 					$scope.alert.type = 'danger';
 					$scope.alert.message = 'Results successfully saved.'

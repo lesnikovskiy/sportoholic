@@ -3,8 +3,7 @@ var util = require('util');
 var utils = require('./utilities');
 
 module.exports = (function () {	
-	//var connection_string = 'mongodb://localhost:8000/sportoholic';	
-	var connection_string = 'mongodb://nodejitsu:89af3de90d9d2564412b04ae75baf36d@troup.mongohq.com:10041/nodejitsudb222227843';
+	var connection_string = 'mongodb://localhost:8000/sportoholic';	
 	
 	var connection = mongoose.connection;
 	connection.on('error', console.error.bind(console, 'connection error: '));
@@ -24,7 +23,8 @@ module.exports = (function () {
 		morningFitness: {type: Boolean},
 		nightFitness: {type: Boolean},
 		walking: {type: Boolean},
-		notes: {type: String}
+		notes: {type: String},
+		userId: {type: ObjectId}
 	});
 	
 	var UserSchema = new Schema({
@@ -48,11 +48,11 @@ module.exports = (function () {
 			if (connection.readyState !== 2)
 				mongoose.disconnect();
 		},
-		listResults: function (callback) {
+		listResults: function (userId, callback) {
 			var startDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
 			var endDate = new Date(new Date().getFullYear(), new Date().getMonth(), utils.getMonthDays(new Date().getMonth())).toISOString();
 						
-			Result.find({'date': {'$gte': startDate, '$lte': endDate}})
+			Result.find({userId: userId, 'date': {'$gte': startDate, '$lte': endDate}})
 				.sort({date: -1})
 				.exec(function(err, results) {
 					if (err)
