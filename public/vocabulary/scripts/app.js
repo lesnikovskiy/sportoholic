@@ -1,0 +1,1 @@
+var vocabulary = angular.module('vocabulary', ['vControllers']);

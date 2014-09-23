@@ -140,6 +140,36 @@ app.post('/signin', function (req, res) {
 	});
 });
 
+app.get('/api/vocabulary/:category', function (req, res, next) {
+	var category = req.params.category;
+	if (!category)
+		return res.send(500, 'Category is required');
+				
+	db.listWords(category, function (err, entries) {
+		if (err)
+			return res.send(500, err);
+			
+		return res.send(200, entries);
+	});
+});
+
+app.post('/api/vocabulary/', function (req, res, next) {
+	db.saveWord({
+		word: req.body.word,
+		translation: req.body.translation,
+		category: req.body.category
+	}, function (err, result) {
+		if (err)
+			return res.send(500, err);
+			
+		return res.send(200, result);
+	});
+});
+
+app.get('/vocabulary', function (req, res, next) {
+	res.sendfile(path.join(__dirname, '/public/vocabulary/index.html'));
+});
+
 app.get('*', function (req, res) {
     res.sendfile(path.join(__dirname, '/public/index.html'));
 });
