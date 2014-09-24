@@ -10,12 +10,26 @@
 	<link rel="stylesheet" href="/vocabulary/styles/styles.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-route.min.js"></script>
 	
 	<script src="/scripts/utils.js"></script>
 	<script src="/vocabulary/scripts/app.js"></script>
 	<script src="/vocabulary/scripts/controllers.js"></script>
 </head>
 <body>
-	
+	<div id="container">
+		<div class="jumbotron">
+			<h1>Vocabulary</h1>
+			<p>Learn words</p>                
+		</div>
+		
+		<nav class="navbar navbar-default" role="navigation">
+			<a class="navbar-brand" href="#/">Word list</a>
+			<a class="navbar-brand" href="#/new">Add entry</a>
+			<a class="navbar-brand" href="#/learn">Learn words</a>
+		</nav>
+		
+		<div ng-view></div>
+	</div>
 </body>
 </html>

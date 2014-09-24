@@ -1,0 +1,6 @@
+<div ng-repeat="entry in entries">
+	<div>
+		<strong>{{entry.word}}</strong> - {{entry.translation}} 
+		[<a href="#" ng-click="remove(entry._id)">x</a>]
+	</div>
+</div>

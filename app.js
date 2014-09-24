@@ -140,12 +140,8 @@ app.post('/signin', function (req, res) {
 	});
 });
 
-app.get('/api/vocabulary/:category', function (req, res, next) {
-	var category = req.params.category;
-	if (!category)
-		return res.send(500, 'Category is required');
-				
-	db.listWords(category, function (err, entries) {
+app.get('/apis/vocabulary', function (req, res, next) {				
+	db.listWords(function (err, entries) {
 		if (err)
 			return res.send(500, err);
 			
@@ -153,12 +149,21 @@ app.get('/api/vocabulary/:category', function (req, res, next) {
 	});
 });
 
-app.post('/api/vocabulary/', function (req, res, next) {
+app.post('/apis/vocabulary', function (req, res, next) {
 	db.saveWord({
 		word: req.body.word,
 		translation: req.body.translation,
 		category: req.body.category
 	}, function (err, result) {
+		if (err)
+			return res.send(500, err);
+			
+		return res.send(200, result);
+	});
+});
+
+app.delete('/apis/vocabulary/:id', function (req, res, next) {
+	db.deleteWord({_id: req.params.id}, function (err, result) {
 		if (err)
 			return res.send(500, err);
 			

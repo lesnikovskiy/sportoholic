@@ -37,14 +37,12 @@ module.exports = (function () {
 		
 	var VocabularySchema = new Schema({
 		word: {type: String, required: true},
-		translation: {type: String, required: true},
-		category: {type: String, required: true}
+		translation: {type: String, required: true}
 	});
 	
 	/************** Models ********************/
 	var Result = mongoose.model('Result', ResultSchema);
 	var User = mongoose.model('User', UserSchema);
-	var Category = mongoose.model('Category', CategorySchema);
 	var Vocabulary = mongoose.model('Vocabulary', VocabularySchema);
 		
 	return {
@@ -110,8 +108,8 @@ module.exports = (function () {
 				return callback(null, u);
 			});
 		}, 
-		listWords: function (category, callback) {
-			Vocabulary.find({category: category).exec(function (err, words) {
+		listWords: function (callback) {
+			Vocabulary.find().exec(function (err, words) {
 				if (err)
 					return callback(err);
 					
@@ -119,7 +117,20 @@ module.exports = (function () {
 			});
 		},
 		saveWord: function (entry, callback) {
-			Vocabulary.create
+			Vocabulary.create(entry, function (err, result) {
+				if (err)
+					return callback(err);
+					
+				return callback(null, result);
+			});
+		},
+		deleteWord: function (where, callback) {
+			Vocabulary.remove(where, function (err, result) {
+				if (err)
+					return callback(err);
+					
+				return callback(null, result);
+			});
 		}
 	};	
 })();
