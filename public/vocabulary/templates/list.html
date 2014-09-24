@@ -2,5 +2,11 @@
 	<div>
 		<strong>{{entry.word}}</strong> - {{entry.translation}} 
 		[<a href="#" ng-click="remove(entry._id)">x</a>]
-	</div>
+	</div>	
+</div>
+<div>
+	<ul class="pager">
+		<li class="previous"><a href="#" ng-click="older()">&larr; Older</a></li>
+		<li class="next"><a href="#" ng-click="newer()">Newer &rarr;</a></li>
+	</ul>
 </div>

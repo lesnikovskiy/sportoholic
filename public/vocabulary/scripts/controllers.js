@@ -3,13 +3,30 @@ var vControllers = angular.module('vControllers', []);
 vControllers.controller('listController', ['$scope', '$window', '$http', '$location', function ($scope, $window, $http, $location) {
 	$scope.entries = [];
 	
-	$http.get('/apis/vocabulary')
-		.success(function (data) {
-			$scope.entries = data;
-		})
-		.error(function (data) {
-			alert(data);
-		});
+	var skip = 0;
+	var take = 10;
+	
+	function getEntries(skipArg, takeArg) {
+	debugger;
+		$http.get('/apis/vocabulary/' + skipArg + '/' + takeArg)
+			.success(function (data) {
+				$scope.entries = data;
+			}).error(function (data) {
+				alert(data);
+			});
+	}
+	
+	getEntries(0, 10);
+	
+	$scope.newer = function () {
+		skip = skip - take > 0 ? 0 : skip;
+		getEntries(skip, take);
+	};
+	
+	$scope.older = function () {
+		skip += take;
+		getEntries(skip, take);
+	};
 		
 	$scope.remove = function (_id) {
 		$http({
@@ -18,7 +35,7 @@ vControllers.controller('listController', ['$scope', '$window', '$http', '$locat
 			}).success(function (data) {
 				$(location).path('/');
 			}).error(function(data) {
-				alert('Error: ' + data);
+				$(location).path('/');
 			});
 	};
 }]);
@@ -27,10 +44,10 @@ vControllers.controller('newController', ['$scope', '$window', '$http', '$locati
 	$scope.entry = {
 		word: '',
 		translation: ''
-	};
+	};	
 		
 	$scope.saveWord = function() {
-		$http.post('/apis/vocabulary/', $scope.entry)
+		$http.post('/apis/vocabulary', $scope.entry)
 			.success(function (data) {				
 				$location.path('/');
 			})

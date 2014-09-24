@@ -108,8 +108,8 @@ module.exports = (function () {
 				return callback(null, u);
 			});
 		}, 
-		listWords: function (callback) {
-			Vocabulary.find().exec(function (err, words) {
+		listWords: function (skip, take, callback) {
+			Vocabulary.find().skip(skip).limit(take).sort({_id: 'desc'}).exec(function (err, words) {
 				if (err)
 					return callback(err);
 					

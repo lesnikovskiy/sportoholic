@@ -140,8 +140,10 @@ app.post('/signin', function (req, res) {
 	});
 });
 
-app.get('/apis/vocabulary', function (req, res, next) {				
-	db.listWords(function (err, entries) {
+app.get('/apis/vocabulary/:skip/:take', function (req, res, next) {	
+	var skip = parseInt(req.params.skip);
+	var take = parseInt(req.params.take);
+	db.listWords(skip, take, function (err, entries) {
 		if (err)
 			return res.send(500, err);
 			
